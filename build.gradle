@@ -1,0 +1,68 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'rebel'
+apply plugin: 'eclipse'
+
+group = 'org.broadleafcommerce'
+version = '1.0.0-SNAPSHOT'
+
+description = """BroadleafCommerce Rackspace Integrations"""
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+configurations.all {
+}
+
+repositories {
+    mavenCentral()        
+    mavenLocal()
+    maven {
+        url "http://nexus.broadleafcommerce.org/nexus/content/repositories/snapshots"
+        url "http://nexus.broadleafcommerce.org/nexus/content/repositories/releases"
+    }
+}
+
+// Normal application dependencies
+dependencies {
+    compile 'org.apache.jclouds:jclouds-allblobstore:1.7.1'
+    compile 'org.broadleafcommerce:broadleaf-common:3.1.0-GA'
+    compile 'log4j:log4j:1.2.12'
+    compile 'org.slf4j:jcl-over-slf4j:1.6.1'
+    compile 'org.slf4j:slf4j-api:1.6.1'
+    runtime 'org.slf4j:slf4j-log4j12:1.6.1'
+    testCompile 'org.broadleafcommerce:broadleaf-third-party-integration-config:default'
+    testCompile 'org.springframework:spring-test:3.1.3.RELEASE'
+    testCompile 'junit:junit:4.11'
+}
+
+// Dependencies needed in the build process
+buildscript {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+    dependencies {
+        classpath 'org.zeroturnaround:gradle-jrebel-plugin:1.1.2'
+    }
+}
+
+// Simulates a Maven profile. Activate in the same way, 'gradle build -Pblc-development'
+if (hasProperty('blc-development')) {
+    jar.dependsOn generateRebel
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
