@@ -1,17 +1,69 @@
+// Self-explanatory
 apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'rebel'
 apply plugin: 'eclipse'
 
+// License headers
+apply plugin: 'license'
+
+// Allows for the 'optional' keyword within the dependencies block
+apply plugin: 'propdeps'
+apply plugin: 'propdeps-maven'
+
+/**
+ *  Awesome plugin that does a few things:
+ *  1. Builds and attaches sources, javadocs and tests archives
+ *  2. Signs artifacts with the signing plugin if the project version does not end in 'SNAPSHOT'
+ *  3. Allows for a nexusUsername and nexusPassword external property for repository credential information
+ *  4. Allows for pom generation customization with the modifyPom block
+ */
+apply plugin: 'nexus'
+apply plugin: 'signing'
+
 group = 'org.broadleafcommerce'
 version = '1.0.0-SNAPSHOT'
 
-description = """BroadleafCommerce Rackspace Integrations"""
+description = "BroadleafCommerce Rackspace Integrations"
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
-configurations.all {
+project.ext {
+    release = !project.version.endsWith('-SNAPSHOT')
+//    nexusUsername = mavenSnapshotsUser
+//    nexusPassword = mavenSnapshotsPassword
+}
+
+modifyPom {
+    // TODO: Consider moving this to a common build.gradle that this gradle file extends from
+    project {
+        licenses {
+            license {
+                name 'The Apache Software License, Version 2.0'
+                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                distribution 'repo'
+            }
+        }
+        
+        scm {
+            connection 'scm:git:git@github.com:BroadleafCommerce/blc-rackspace.git'
+            developerConnection 'scm:git:git@github.com:BroadleafCommerce/blc-rackspace.git'
+            url 'https://github.com/BroadleafCommerce/blc-rackspace'
+        }
+        
+        developers {
+            developer {
+                id 'phillipuniverse'
+                name 'Phillip Verheyden'
+                email 'pverheyden@broadleafcommerce.com'
+            }
+        }
+    }
+}
+
+signing {
+    // TODO: configure prior to release
 }
 
 repositories {
@@ -26,7 +78,7 @@ repositories {
 // Normal application dependencies
 dependencies {
     compile 'org.apache.jclouds:jclouds-allblobstore:1.7.1'
-    compile 'org.broadleafcommerce:broadleaf-common:3.1.0-GA'
+    optional 'org.broadleafcommerce:broadleaf-common:3.1.0-GA'
     compile 'log4j:log4j:1.2.12'
     compile 'org.slf4j:jcl-over-slf4j:1.6.1'
     compile 'org.slf4j:slf4j-api:1.6.1'
@@ -41,28 +93,43 @@ buildscript {
     repositories {
         mavenCentral()
         mavenLocal()
+        jcenter()
+        maven {
+            url 'http://repo.springsource.org/plugins-release'
+        }
     }
     dependencies {
+        // JRebel
         classpath 'org.zeroturnaround:gradle-jrebel-plugin:1.1.2'
+        // license generation
+        classpath 'nl.javadude.gradle.plugins:license-gradle-plugin:0.7.0'
+        // allows 'optional' and 'provided' dependency syntax
+        classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.5'
+        // Nexus plugin
+        classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.7'
     }
 }
+
+license {
+    ext.startYear = 2014
+    ext.endYear = Calendar.getInstance().get(Calendar.YEAR);
+    ext.company = 'Broadleaf Commerce'
+    ext.description = project.description
+}
+// Automatically apply the license when building the Jar
+jar.dependsOn licenseFormat
 
 // Simulates a Maven profile. Activate in the same way, 'gradle build -Pblc-development'
 if (hasProperty('blc-development')) {
     jar.dependsOn generateRebel
 }
 
-task sourcesJar(type: Jar) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-task javadocJar(type: Jar) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives sourcesJar
-    archives javadocJar
+// Maven deployer configuration
+nexus {
+    attachJavadoc = true
+    attachSources = true
+    attachTests = true
+    sign = release
+    repositoryUrl 'http://nexus.broadleafcommerce.org/nexus/content/repositories/releases'
+    snapshotRepositoryUrl 'http://nexus.broadleafcommerce.org/nexus/content/repositories/snapshots'
 }
