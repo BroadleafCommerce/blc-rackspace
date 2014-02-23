@@ -130,6 +130,7 @@ class CloudFilesTest {
         uploadFile(filename)
         propMap[CloudFilesConfiguration.CONTAINER_SUBDIR_PROP] = ''
         assertEquals(fileLines.join("\n") + "\n", provider.getResource(subdir + '/' + filename).text)
+        propMap[CloudFilesConfiguration.CONTAINER_SUBDIR_PROP] = subdir
         provider.removeResource(filename)
     }
     
