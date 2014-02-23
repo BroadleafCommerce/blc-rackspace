@@ -1,6 +1,10 @@
 # Module Installation 
 The Broadleaf Rackspace module requires [configuration](#configuration-changes) and [third-party property configuration](#third-party-property-configuration)
 
+## Dependency Notes
+The Rackspace module has a hard dependency on Google Guava because of [JClouds](http://jclouds.apache.org/). JClouds is *extremely* sensitive to the version of Guava as it uses it extensively. For this reason, Maven's dependency conflict resolution cannot be trusted to always pick the appropriate Guava version.
+
+Let us know [on GitHub](https://github.com/broadleafcommerce/blc-rackspace) if you run into any problems with the hard Guava dependency. This should not have much, if any, impact on your project.
 
 ## Configuration Changes
 **Step 1.**  Add the dependency management section to your **parent** `pom.xml`:

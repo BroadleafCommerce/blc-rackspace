@@ -49,6 +49,10 @@ Open `build/reports/cobertura/index.html` in a browser to see the results (like 
 
 > Remember, you still have to fill out the properties appropriately as notated above in order to run the Cobertura report
 
+## Other Considerations
+This module declares a hard dependency on Google Guava, in lock-step with the Guava version from JClouds. This is because JClouds :shit:s all over itself when there is a Guava version that it doesn't like. This might actually be a good reason to drop JClouds for this integration completely, but whatever. The hard dependency doesn't seem to break anything else in Broadleaf after some smoke tests and it definitely makes this thing work.
+
+If you REALLY need a different version of Guava than the one that is specified here, then please send a pull request!
 
 ## Setting up for development
 Install Gradle (1.10 at time of writing)

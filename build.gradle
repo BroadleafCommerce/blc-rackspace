@@ -113,6 +113,7 @@ repositories {
     maven {
         url 'http://nexus.broadleafcommerce.org/nexus/content/repositories/snapshots'
         url 'http://nexus.broadleafcommerce.org/nexus/content/repositories/releases'
+        // Used for JClouds snapshot releases
         url 'https://repository.apache.org/content/repositories/snapshots'
     }
 }
@@ -125,7 +126,15 @@ project.ext {
 dependencies {
     optional 'org.broadleafcommerce:broadleaf-common:3.1.0-GA'
     compile 'org.codehaus.groovy:groovy-all:2.0.7'
-    compile 'org.apache.jclouds:jclouds-allblobstore:1.7.2-SNAPSHOT'
+
+    // Explicitly specify that we need this version of Guava to properly inform Maven's dependency conflicts. This is
+    // a hard, required dependency for JClouds. Using square brackets was suggested by
+    // http://guntherpopp.blogspot.com/2011/03/understanding-maven-dependency.html
+    // Jclouds 1.7.1 currently uses Guava 15.0. Upgrading JClouds will require updating the Guava version
+    compile 'org.apache.jclouds:jclouds-allblobstore:1.7.1'
+    compile 'com.google.guava:guava:[15.0]'
+    
+    
     compile 'log4j:log4j:1.2.12'
     compile 'org.slf4j:jcl-over-slf4j:1.6.1'
     compile 'org.slf4j:slf4j-api:1.6.1'
