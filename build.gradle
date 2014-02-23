@@ -111,8 +111,9 @@ repositories {
     mavenCentral()
     mavenLocal()
     maven {
-        url "http://nexus.broadleafcommerce.org/nexus/content/repositories/snapshots"
-        url "http://nexus.broadleafcommerce.org/nexus/content/repositories/releases"
+        url 'http://nexus.broadleafcommerce.org/nexus/content/repositories/snapshots'
+        url 'http://nexus.broadleafcommerce.org/nexus/content/repositories/releases'
+        url 'https://repository.apache.org/content/repositories/snapshots'
     }
 }
 
@@ -124,7 +125,7 @@ project.ext {
 dependencies {
     optional 'org.broadleafcommerce:broadleaf-common:3.1.0-GA'
     compile 'org.codehaus.groovy:groovy-all:2.0.7'
-    compile 'org.apache.jclouds:jclouds-allblobstore:1.7.1'
+    compile 'org.apache.jclouds:jclouds-allblobstore:1.7.2-SNAPSHOT'
     compile 'log4j:log4j:1.2.12'
     compile 'org.slf4j:jcl-over-slf4j:1.6.1'
     compile 'org.slf4j:slf4j-api:1.6.1'
