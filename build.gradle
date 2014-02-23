@@ -3,6 +3,7 @@ apply plugin: 'groovy'
 apply plugin: 'maven'
 apply plugin: 'rebel'
 apply plugin: 'eclipse'
+apply plugin: 'cobertura'
 
 // License headers
 apply plugin: 'license'
@@ -77,6 +78,8 @@ buildscript {
         classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.5'
         // Nexus plugin
         classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.7'
+        // Cobertura
+        classpath 'net.saliman:gradle-cobertura-plugin:2.2.2'
     }
 }
 

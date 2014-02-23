@@ -52,6 +52,15 @@ class CloudFilesFileServiceProvider implements FileServiceProvider {
     @Override
     File getResource(String name, FileApplicationType fileApplicationType) {
         File localFile = fileService.getLocalResource(name);
+        if (!localFile.parentFile.exists()) {
+            if (!localFile.parentFile.mkdirs()) {
+                // Other thread could have created - check one more time.
+                if (!localFile.parentFile().exists()) {
+                    throw new RuntimeException("Unable to create parent directories for file: " + name);
+                }
+            }
+        }
+        
         SwiftObject remoteFile = client.getObject(lookupConfiguration().container, buildResourceName(name), null)
         InputStream inStream = remoteFile.payload.openStream()
         OutputStream outStream = new FileOutputStream(localFile)
@@ -72,10 +81,10 @@ class CloudFilesFileServiceProvider implements FileServiceProvider {
             obj.info.name = buildResourceName(FilenameUtils.getName(file.getAbsolutePath()))
             obj.setPayload(file)
             CloudFilesConfiguration conf = lookupConfiguration()
-            client.putObject(conf.container, obj)
             if (!client.containerExists(conf.container)) {
                 client.createContainer(conf.container)
             }
+            client.putObject(conf.container, obj)
             client.close()
         }
     }

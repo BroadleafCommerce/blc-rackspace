@@ -27,8 +27,6 @@ import org.broadleafcommerce.common.config.service.SystemPropertiesService
 import org.broadleafcommerce.common.file.domain.FileWorkArea
 import org.broadleafcommerce.common.file.service.BroadleafFileServiceImpl
 import org.broadleafcommerce.common.util.BLCSystemProperty
-import org.jclouds.ContextBuilder
-import org.jclouds.cloudfiles.CloudFilesApiMetadata
 import org.jclouds.cloudfiles.CloudFilesClient
 import org.jclouds.openstack.swift.domain.SwiftObject
 import org.junit.Before
@@ -104,6 +102,13 @@ class CloudFilesTest {
     }
     
     @Test
+    def void testGetWithAbsolute() {
+        uploadFile(filename)
+        assertEquals(fileLines.join("\n") + "\n", provider.getResource('/' + filename).text)
+        provider.removeResource(filename)
+    }
+    
+    @Test
     def void testBasicDelete() {
         uploadFile(filename)
         validateUpload(filename, false)
@@ -119,17 +124,38 @@ class CloudFilesTest {
     }
     
     @Test
+    def void testSubdirectoryDownload() {
+        String subdir = '/dir1/dir2'
+        propMap[CloudFilesConfiguration.CONTAINER_SUBDIR_PROP] = subdir
+        uploadFile(filename)
+        propMap[CloudFilesConfiguration.CONTAINER_SUBDIR_PROP] = ''
+        assertEquals(fileLines.join("\n") + "\n", provider.getResource(subdir + '/' + filename).text)
+        provider.removeResource(filename)
+    }
+    
+    @Test
     def void testAbsolutePaths() {
         uploadFile('/' + filename)
         validateUpload(filename, true)
     }
     
+    @Test
+    def void testContainerCreate() {
+        def nonexistentContainer = 'blc-onthefly-container'
+        propMap[CloudFilesConfiguration.CONTAINER_PROP] = nonexistentContainer
+        CloudFilesClient client = provider.client
+        // Ensure that the container doesn't exist
+        assertTrue(client.listContainers().collect { it.name }.find() != nonexistentContainer)
+        uploadFile(filename)
+        validateUpload(filename, true)
+        // Ensure that the container is deleted and reports that it doesn't exist
+        assertTrue(client.deleteContainerIfEmpty(nonexistentContainer))
+        assertTrue(client.listContainers().collect { it.name }.find() != nonexistentContainer)
+    }
+    
     def void validateUpload(String path, boolean cleanup) {
         CloudFilesConfiguration conf = provider.lookupConfiguration()
-        CloudFilesClient client = ContextBuilder.newBuilder(new CloudFilesApiMetadata())
-            .credentials(conf.username, conf.apikey)
-            .endpoint(conf.endpoint)
-            .buildApi(CloudFilesClient)
+        CloudFilesClient client = provider.client
         SwiftObject obj = client.getObject(propMap[CloudFilesConfiguration.CONTAINER_PROP], path, null)
         InputStream instream = obj.payload.openStream()
         String text = instream.text
