@@ -1,5 +1,5 @@
 // Self-explanatory
-apply plugin: 'java'
+apply plugin: 'groovy'
 apply plugin: 'maven'
 apply plugin: 'rebel'
 apply plugin: 'eclipse'
@@ -19,6 +19,8 @@ apply plugin: 'propdeps-maven'
  *  4. Allows for pom generation customization with the modifyPom block
  */
 apply plugin: 'nexus'
+
+// Jar signing, used when uploading artifacts to the nexus
 apply plugin: 'signing'
 
 group = 'org.broadleafcommerce'
@@ -28,12 +30,6 @@ description = "BroadleafCommerce Rackspace Integrations"
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
-
-project.ext {
-    release = !project.version.endsWith('-SNAPSHOT')
-//    nexusUsername = mavenSnapshotsUser
-//    nexusPassword = mavenSnapshotsPassword
-}
 
 modifyPom {
     // TODO: Consider moving this to a common build.gradle that this gradle file extends from
@@ -62,32 +58,6 @@ modifyPom {
     }
 }
 
-signing {
-    // TODO: configure prior to release
-}
-
-repositories {
-    mavenCentral()        
-    mavenLocal()
-    maven {
-        url "http://nexus.broadleafcommerce.org/nexus/content/repositories/snapshots"
-        url "http://nexus.broadleafcommerce.org/nexus/content/repositories/releases"
-    }
-}
-
-// Normal application dependencies
-dependencies {
-    compile 'org.apache.jclouds:jclouds-allblobstore:1.7.1'
-    optional 'org.broadleafcommerce:broadleaf-common:3.1.0-GA'
-    compile 'log4j:log4j:1.2.12'
-    compile 'org.slf4j:jcl-over-slf4j:1.6.1'
-    compile 'org.slf4j:slf4j-api:1.6.1'
-    runtime 'org.slf4j:slf4j-log4j12:1.6.1'
-    testCompile 'org.broadleafcommerce:broadleaf-third-party-integration-config:default'
-    testCompile 'org.springframework:spring-test:3.1.3.RELEASE'
-    testCompile 'junit:junit:4.11'
-}
-
 // Dependencies needed in the build process
 buildscript {
     repositories {
@@ -110,6 +80,15 @@ buildscript {
     }
 }
 
+// Simulates a Maven profile. Activate in the same way, 'gradle build -Pblc-development'
+if (hasProperty('blc-development')) {
+    jar.dependsOn generateRebel
+}
+
+signing {
+// TODO: configure prior to release
+}
+
 license {
     ext.startYear = 2014
     ext.endYear = Calendar.getInstance().get(Calendar.YEAR);
@@ -119,9 +98,34 @@ license {
 // Automatically apply the license when building the Jar
 jar.dependsOn licenseFormat
 
-// Simulates a Maven profile. Activate in the same way, 'gradle build -Pblc-development'
-if (hasProperty('blc-development')) {
-    jar.dependsOn generateRebel
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven {
+        url "http://nexus.broadleafcommerce.org/nexus/content/repositories/snapshots"
+        url "http://nexus.broadleafcommerce.org/nexus/content/repositories/releases"
+    }
+}
+
+project.ext {
+    powermockVersion = '1.5.4'
+}
+
+// Normal application dependencies
+dependencies {
+    optional 'org.broadleafcommerce:broadleaf-common:3.1.0-GA'
+    compile 'org.codehaus.groovy:groovy-all:2.0.7'
+    compile 'org.apache.jclouds:jclouds-allblobstore:1.7.1'
+    compile 'log4j:log4j:1.2.12'
+    compile 'org.slf4j:jcl-over-slf4j:1.6.1'
+    compile 'org.slf4j:slf4j-api:1.6.1'
+    runtime 'org.slf4j:slf4j-log4j12:1.6.1'
+    testCompile 'org.broadleafcommerce:broadleaf-third-party-integration-config:default'
+    testCompile 'org.springframework:spring-test:3.1.3.RELEASE'
+    testCompile 'junit:junit:4.11'
+    testCompile 'org.mockito:mockito-all:1.9.5'
+    testCompile "org.powermock:powermock-module-junit4:${powermockVersion}"
+    testCompile "org.powermock:powermock-api-mockito:${powermockVersion}"
 }
 
 // Maven deployer configuration
@@ -129,7 +133,6 @@ nexus {
     attachJavadoc = true
     attachSources = true
     attachTests = true
-    sign = release
     repositoryUrl 'http://nexus.broadleafcommerce.org/nexus/content/repositories/releases'
     snapshotRepositoryUrl 'http://nexus.broadleafcommerce.org/nexus/content/repositories/snapshots'
 }
