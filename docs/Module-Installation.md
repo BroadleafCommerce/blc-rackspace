@@ -7,13 +7,23 @@ The Rackspace module has a hard dependency on Google Guava because of [JClouds](
 Let us know [on GitHub](https://github.com/broadleafcommerce/blc-rackspace) if you run into any problems with the hard Guava dependency. This should not have much, if any, impact on your project.
 
 ## Configuration Changes
+**Step 0** Add the Broadleaf snapshots repository to your **parent** `pom.xml` if not already there:
+
+```xml
+<repository>
+    <id>public snapshots</id>
+    <name>public snapshots</name>
+    <url>http://nexus.broadleafcommerce.org/nexus/content/repositories/snapshots/</url>
+</repository>
+```
+
 **Step 1.**  Add the dependency management section to your **parent** `pom.xml`:
     
 ```xml
 <dependency>
     <groupId>org.broadleafcommerce</groupId>
     <artifactId>broadleaf-rackspace</artifactId>
-    <version>1.0.0-GA</version>
+    <version>1.0.0-SNAPSHOT</version>
     <type>jar</type>
     <scope>compile</scope>
 </dependency>
