@@ -107,6 +107,10 @@ test {
     jvmArgs = project.properties.collect {k,v -> k.startsWith('broadleaf.rackspace') ? "-D$k=$v" : ''}.minus('')
 }
 
+cobertura {
+    coverageFormats = ['html', 'xml']
+}
+
 repositories {
     mavenCentral()
     mavenLocal()
