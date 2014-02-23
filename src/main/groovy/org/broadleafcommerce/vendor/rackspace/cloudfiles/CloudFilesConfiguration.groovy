@@ -26,11 +26,11 @@ package org.broadleafcommerce.vendor.rackspace.cloudfiles
  */
 class CloudFilesConfiguration {
     
-    static final String USERNAME_PROP = 'broadleaf-rackspace.cloudfiles.username'
-    static final String APIKEY_PROP = 'broadleaf-rackspace.cloudfiles.apikey'
-    static final String ENDPOINT_PROP = 'broadleaf-rackspace.cloudfiles.endpoint'
-    static final String CONTAINER_PROP = 'broadleaf-rackspace.cloudfiles.container'
-    static final String CONTAINER_SUBDIR_PROP = 'broadleaf-rackspace.cloudfiles.containerSubDirectory'
+    static final String USERNAME_PROP = 'broadleaf.rackspace.cloudfiles.username'
+    static final String APIKEY_PROP = 'broadleaf.rackspace.cloudfiles.apikey'
+    static final String ENDPOINT_PROP = 'broadleaf.rackspace.cloudfiles.endpoint'
+    static final String CONTAINER_PROP = 'broadleaf.rackspace.cloudfiles.container'
+    static final String CONTAINER_SUBDIR_PROP = 'broadleaf.rackspace.cloudfiles.containerSubDirectory'
 
     def username
     def apikey

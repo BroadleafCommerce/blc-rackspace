@@ -101,6 +101,12 @@ license {
 // Automatically apply the license when building the Jar
 jar.dependsOn licenseFormat
 
+test {
+    // Collect all of the broadleaf.rackspace properties and pass them in as system arguments to the test execution.
+    // This little snippet converts all the key-value pairs into -D args and then subtracts the empty strings
+    jvmArgs = project.properties.collect {k,v -> k.startsWith('broadleaf.rackspace') ? "-D$k=$v" : ''}.minus('')
+}
+
 repositories {
     mavenCentral()
     mavenLocal()
@@ -123,12 +129,14 @@ dependencies {
     compile 'org.slf4j:jcl-over-slf4j:1.6.1'
     compile 'org.slf4j:slf4j-api:1.6.1'
     runtime 'org.slf4j:slf4j-log4j12:1.6.1'
-    testCompile 'org.broadleafcommerce:broadleaf-third-party-integration-config:default'
     testCompile 'org.springframework:spring-test:3.1.3.RELEASE'
     testCompile 'junit:junit:4.11'
     testCompile 'org.mockito:mockito-all:1.9.5'
     testCompile "org.powermock:powermock-module-junit4:${powermockVersion}"
     testCompile "org.powermock:powermock-api-mockito:${powermockVersion}"
+    if (project.hasProperty("blc-config")) {
+        optional 'org.broadleafcommerce:broadleaf-third-party-integration-config:default'
+    }
 }
 
 // Maven deployer configuration

@@ -1,3 +1,56 @@
+## Running Locally
+Assuming that you have Gradle and Groovy installed (see below for instructions) the only tricky part is in running the tests, since you have to pass in credentials. A few ways to do this:
+
+1. If you are a BLC developer, pull down the 'ThirdPartyIntegrationConfig' project and do a local maven install. Run the build with `-Pblc-config`
+
+	```console
+	gradle build -Pblc-config
+	```
+
+2. Fill in appropriate values within `src/main/resources/config/bc/rackspace/common.properties` but **do not check in**
+
+3. Pass in values via command line properties:
+
+	```console
+	gradle build -Pbroadleaf.rackspace.cloudfiles.username=<user> -Pbroadleaf.rackspace.cloudfiles.apikey=<key> -Pbroadleaf.rackspace.cloudfiles.container=<container> -Pbroadleaf.rackspace.cloudfiles.containerSubDirectory=<subdir> -Pbroadleaf.rackspace.cloudfiles.endpoint=<London or US endpoint>
+	```
+
+4. Fill out values in `~/.gradle/gradle.properties`
+
+	```properties
+	broadleaf.rackspace.cloudfiles.username=<user>
+	broadleaf.rackspace.cloudfiles.apikey=<key>
+	broadleaf.rackspace.cloudfiles.container=<container>
+	broadleaf.rackspace.cloudfiles.containerSubDirectory=<subdir>
+	broadleaf.rackspace.cloudfiles.endpoint=<London or US endpoint>
+	```
+
+### JRebel
+If you are using JRebel, build with the `blc-development` flag either as a command line argument:
+
+```console
+gradle build -Pblc-development
+```
+
+Or globally in `~/.gradle/gradle.properties`
+
+```properties
+blc-development=true
+```
+
+### Cobertura
+Generate a test coverage report with:
+
+```console
+gradle cobertura
+```
+
+Open `build/reports/cobertura/index.html` in a browser to see the results (like the Eclipse browser).
+
+> Remember, you still have to fill out the properties appropriately as notated above in order to run the Cobertura report
+
+
+## Setting up for development
 Install Gradle (1.10 at time of writing)
 
 ```console
@@ -6,7 +59,7 @@ brew install gradle
 
 Install Groovy (2.2.1 at time of writing) and follow the instructions at the end to set GROOVY_HOME
 
-``console
+```console
 brew install groovy
 ```
 

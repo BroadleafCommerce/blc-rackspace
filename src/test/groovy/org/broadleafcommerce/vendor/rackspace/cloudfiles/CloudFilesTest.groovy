@@ -62,11 +62,11 @@ class CloudFilesTest {
     static CloudFilesFileServiceProvider provider = new CloudFilesFileServiceProvider()
     
     static void resetAllProperties() {
-        propMap[CloudFilesConfiguration.USERNAME_PROP] = findProperty('broadleaf-rackspace.cloudfiles.username', 'user')
-        propMap[CloudFilesConfiguration.APIKEY_PROP] = findProperty('broadleaf-rackspace.cloudfiles.apikey', 'user')
-        propMap[CloudFilesConfiguration.CONTAINER_PROP] = findProperty('broadleaf-rackspace.cloudfiles.container', 'user')
-        propMap[CloudFilesConfiguration.ENDPOINT_PROP] = findProperty('broadleaf-rackspace.cloudfiles.endpoint', '')
-        propMap[CloudFilesConfiguration.CONTAINER_SUBDIR_PROP] = findProperty('broadleaf-rackspace.cloudfiles.containerSubDirectory', '')
+        propMap[CloudFilesConfiguration.USERNAME_PROP] = findProperty(CloudFilesConfiguration.USERNAME_PROP, 'username')
+        propMap[CloudFilesConfiguration.APIKEY_PROP] = findProperty(CloudFilesConfiguration.APIKEY_PROP, 'apikey')
+        propMap[CloudFilesConfiguration.CONTAINER_PROP] = findProperty(CloudFilesConfiguration.CONTAINER_PROP, 'container')
+        propMap[CloudFilesConfiguration.ENDPOINT_PROP] = findProperty(CloudFilesConfiguration.ENDPOINT_PROP, 'endpoint')
+        propMap[CloudFilesConfiguration.CONTAINER_SUBDIR_PROP] = findProperty(CloudFilesConfiguration.CONTAINER_SUBDIR_PROP, '')
     }
     
     /**
@@ -178,9 +178,21 @@ class CloudFilesTest {
         Properties properties = new Properties();
         def res = System.getProperty(propertyName);
         if (!res) {
-            CloudFilesFileServiceProvider.getResource("/config/bc/override/common.properties").withInputStream { is ->
-                properties.load(is)
-                res = properties.getProperty(propertyName)
+            def overrides = CloudFilesFileServiceProvider.class.getResource("/config/bc/override/common.properties")
+            if (overrides) {
+                overrides.withInputStream { is ->
+                    properties.load(is)
+                    res = properties.getProperty(propertyName)
+                }
+            }
+        }
+        if (!res) {
+            def local = CloudFilesFileServiceProvider.class.getResource("/config/bc/rackspace/common.properties")
+            if (local) {
+                local.withInputStream { is ->
+                    properties.load(is)
+                    res = properties.getProperty(propertyName)
+                }
             }
         }
         if (!res) {
