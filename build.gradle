@@ -89,7 +89,8 @@ if (hasProperty('blc-development')) {
 }
 
 signing {
-// TODO: configure prior to release
+    // This plugin is automatically enabled by the nexus plugin whenever the version does not end in SNAPSHOTS
+    // the other parameters are configured in ~/.gradle/gradle.properties
 }
 
 license {
