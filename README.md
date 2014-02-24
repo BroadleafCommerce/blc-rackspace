@@ -1,3 +1,5 @@
+Integration and user docs are located at http://docs.broadleafcommerce.org/rackspace/current
+
 ## Running Locally
 Assuming that you have Gradle and Groovy installed (see below for instructions) the only tricky part is in running the tests, since you have to pass in credentials. A few ways to do this:
 
