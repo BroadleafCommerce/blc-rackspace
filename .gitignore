@@ -1,9 +1,7 @@
-build
+target/
 .classpath
 .project
-.gradle
 .settings
-target
 *.swp
 test-output
 .idea
