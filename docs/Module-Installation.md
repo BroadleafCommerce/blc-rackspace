@@ -2,7 +2,9 @@
 The Broadleaf Rackspace module requires [configuration](#configuration-changes) and [third-party property configuration](#third-party-property-configuration)
 
 ## Dependency Notes
-The Rackspace module has a hard dependency on Google Guava because of [JClouds](http://jclouds.apache.org/). JClouds is *extremely* sensitive to the version of Guava as it uses it extensively. For this reason, Maven's dependency conflict resolution cannot be trusted to always pick the appropriate Guava version.
+The Rackspace module has a hard dependency on Google Guava because of [JClouds](http://jclouds.apache.org/). 
+JClouds is *extremely* sensitive to the version of Guava as it uses it extensively. 
+For this reason, Maven's dependency conflict resolution cannot be trusted to always pick the appropriate Guava version.
 
 Let us know [on GitHub](https://github.com/broadleafcommerce/blc-rackspace) if you run into any problems with the hard Guava dependency. This should not have much, if any, impact on your project.
 
@@ -23,7 +25,7 @@ Let us know [on GitHub](https://github.com/broadleafcommerce/blc-rackspace) if y
 <dependency>
     <groupId>org.broadleafcommerce</groupId>
     <artifactId>broadleaf-rackspace</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>2.0.0-SNAPSHOT</version>
     <type>jar</type>
     <scope>compile</scope>
 </dependency>
@@ -38,22 +40,6 @@ Let us know [on GitHub](https://github.com/broadleafcommerce/blc-rackspace) if y
 </dependency>
 ```
 
-**Step 3.** Include the necessary `patchConfigLocation` files in your `admin/web.xml`:
-
-```xml
-classpath:/bl-rackspace-applicationContext.xml
-```
->Note: This line should go before the `classpath:/applicationContext.xml` line
-
-
-**Step 4.** Include the necessary `patchConfigLocation` files in your `site/web.xml`:
-
-```xml
-classpath:/bl-rackspace-applicationContext.xml
-```
-> Note: This line should go before the `classpath:/applicationContext.xml` line
-
-
 ## Third Party Property Configuration
 This module requires you to configure properties specific to your Cloud Files account.   
 
@@ -63,12 +49,12 @@ Broadleaf requires access to your Rackspace Cloud Files account via their cloud 
 Once you generate your API key, you will need to copy the values and add the following properties to your `common-shared.properties` file located in your core project.
  
 ```properties
-# The username that you use to log in to the My Cloud Control Panel
-broadleaf.rackspace.cloudfiles.username=
-# The API key that you generated for your username
-broadleaf.rackspace.cloudfiles.apikey=
-# The authentication endpoint. This defaults to the value below which corresponds to the US data centers. If you are using the London data center, you must use https://lon.identity.api.rackspacecloud.com
-broadleaf.rackspace.cloudfiles.endpoint=https://auth.api.rackspacecloud.com\
+broadleaf.rackspace.cloudfiles.provider=<provider>
+broadleaf.rackspace.cloudfiles.username=<username>
+broadleaf.rackspace.cloudfiles.apikey=<apikey>
+broadleaf.rackspace.cloudfiles.region=<region>
+broadleaf.rackspace.cloudfiles.container=<container>
+broadleaf.rackspace.cloudfiles.container.subdirectory=<subdirectory>
 ```
 
 ### Storage Location Information 
