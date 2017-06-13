@@ -19,6 +19,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <blc.version>5.1.0-GA</blc.version>
         <jclouds.version>2.0.1</jclouds.version>
+        <guava.version>16.0.1</guava.version>
     </properties>
 
     <scm>
@@ -102,9 +103,9 @@
             <version>${jclouds.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.google.auto.service</groupId>
-            <artifactId>auto-service</artifactId>
-            <version>1.0-rc2</version>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
         </dependency>
         <dependency>
             <groupId>org.broadleafcommerce</groupId>
