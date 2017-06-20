@@ -13,4 +13,4 @@ Distributed storage is required when running in a multi-server environment to en
 ## Module Configuration
 This module is compatible with BroadleafCommerce **5.1.0-GA**.
 
-For step-by-step instructions on how to integrate the amazon module into your project, see [[Module Installation]].
+For step-by-step instructions on how to integrate the rackspace module into your project, see [[Module Installation]].

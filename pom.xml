@@ -14,7 +14,7 @@
     <description>Broadleaf Rackspace CloudFiles Integration</description>
     <version>2.0.0-SNAPSHOT</version>
 
-		<properties>
+    <properties>
         <project.uri>${project.baseUri}</project.uri>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <blc.version>5.1.0-GA</blc.version>
