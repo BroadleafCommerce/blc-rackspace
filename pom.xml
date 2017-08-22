@@ -17,7 +17,7 @@
     <properties>
         <project.uri>${project.baseUri}</project.uri>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <blc.version>5.1.0-GA</blc.version>
+        <blc.version>5.1.5-SNAPSHOT</blc.version>
         <jclouds.version>2.0.1</jclouds.version>
         <guava.version>16.0.1</guava.version>
     </properties>

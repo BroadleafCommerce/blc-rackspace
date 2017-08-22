@@ -35,4 +35,9 @@
 
     <bean id="blDefaultFileServiceProvider" class="org.broadleafcommerce.vendor.rackspace.cloudfiles.CloudFilesFileServiceProvider" />
 
+    <bean class="org.broadleafcommerce.common.logging.ModuleLifecycleLoggingBean">
+        <property name="moduleName" value="Rackspace" />
+        <property name="lifeCycleEvent" value="LOADING" />
+    </bean>
+
 </beans>
