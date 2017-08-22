@@ -77,8 +77,13 @@
     </distributionManagement>
     <dependencies>
         <dependency>
-            <groupId>org.apache.jclouds</groupId>
-            <artifactId>jclouds-all</artifactId>
+            <groupId>org.apache.jclouds.provider</groupId>
+            <artifactId>rackspace-cloudfiles-us</artifactId>
+            <version>${jclouds.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.jclouds.provider</groupId>
+            <artifactId>rackspace-cloudfiles-uk</artifactId>
             <version>${jclouds.version}</version>
         </dependency>
         <dependency>
