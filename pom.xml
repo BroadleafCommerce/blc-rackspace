@@ -12,7 +12,7 @@
     <artifactId>broadleaf-rackspace</artifactId>
     <name>BroadleafCommerce Rackspace CloudFiles</name>
     <description>Broadleaf Rackspace CloudFiles Integration</description>
-    <version>3.0.0-M1</version>
+    <version>3.0.0-SNAPSHOT</version>
 
     <properties>
         <project.uri>${project.baseUri}</project.uri>
@@ -26,7 +26,7 @@
         <connection>scm:git:git@github.com:BroadleafCommerce/blc-rackspace.git</connection>
         <developerConnection>scm:git:git@github.com:BroadleafCommerce/blc-rackspace.git</developerConnection>
         <url>https://github.com/BroadleafCommerce/blc-rackspace</url>
-        <tag>broadleaf-rackspace-3.0.0-M1</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <url>http://www.broadleafcommerce.com</url>
