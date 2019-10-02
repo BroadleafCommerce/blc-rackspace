@@ -26,10 +26,12 @@ package org.broadleafcommerce.vendor.rackspace.cloudfiles;
 import org.apache.commons.lang3.StringUtils;
 import org.broadleafcommerce.common.config.service.SystemPropertiesServiceImpl;
 import org.junit.BeforeClass;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
-import net.sf.ehcache.CacheManager;
 
 /**
  * @author Elbert Bautista (elbertbautista)
@@ -41,7 +43,6 @@ public class AbstractCloudFilesTest {
 
     @BeforeClass
     public static void setup() {
-        CacheManager.getInstance().addCacheIfAbsent("blSystemPropertyElements");
         configService.setSystemPropertiesService(propService);
     }
 
@@ -56,8 +57,15 @@ public class AbstractCloudFilesTest {
 
     public static class TestSystemPropertiesService extends SystemPropertiesServiceImpl {
 
+        Map<String, String> mapCache = new HashMap<>();
+
         public void setProperty(String propertyName, String value) {
-            super.addPropertyToCache(propertyName, value);
+            mapCache.put(propertyName, value);
+        }
+
+        @Override
+        public String resolveSystemProperty(String name) {
+            return mapCache.get(name);
         }
 
     }
