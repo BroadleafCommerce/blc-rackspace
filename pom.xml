@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.broadleafcommerce</groupId>
         <artifactId>broadleaf-module-parent</artifactId>
-        <version>3.2.0-SNAPSHOT</version>
+        <version>3.2.2-GA</version>
     </parent>
 
     <groupId>org.broadleafcommerce</groupId>
@@ -17,9 +17,8 @@
     <properties>
         <project.uri>${project.baseUri}</project.uri>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <blc.version>6.1.0-SNAPSHOT</blc.version>
+        <blc.version>6.1.0-GA</blc.version>
         <jclouds.version>2.0.1</jclouds.version>
-        <guava.version>16.0.1</guava.version>
     </properties>
 
     <scm>
@@ -89,7 +88,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
+            <version>30.1.1-jre</version>
         </dependency>
         <dependency>
             <groupId>org.broadleafcommerce</groupId>
