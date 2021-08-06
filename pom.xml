@@ -54,14 +54,14 @@
     </developers>
     <repositories>
         <repository>
-            <id>public snapshots</id>
-            <name>public snapshots</name>
-            <url>http://www.broadleafcommerce.org/nexus/content/repositories/snapshots</url>
+            <id>releases</id>
+            <name>public releases</name>
+            <url>http://nexus.broadleafcommerce.org/nexus/content/groups/community-releases/</url>
         </repository>
         <repository>
-            <id>public releases</id>
-            <name>public releases</name>
-            <url>http://www.broadleafcommerce.org/nexus/content/repositories/releases</url>
+            <id>snapshots</id>
+            <name>public snapshots</name>
+            <url>http://nexus.broadleafcommerce.org/nexus/content/groups/community-snapshots/</url>
         </repository>
     </repositories>
     <distributionManagement>
