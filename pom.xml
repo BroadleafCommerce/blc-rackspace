@@ -102,7 +102,7 @@
         <dependency>
             <groupId>org.broadleafcommerce</groupId>
             <artifactId>broadleaf-third-party-integration-config</artifactId>
-            <version>default</version>
+            <version>1.0.0-GA</version>
             <scope>test</scope>
             <type>jar</type>
             <optional>true</optional>
