@@ -65,7 +65,7 @@
             <url>https://nexus2.broadleafcommerce.org/nexus/content/groups/community-snapshots/</url>
         </repository>
         <repository>
-            <id>releases</id>
+            <id>private-releases</id>
             <url>https://nexus2.broadleafcommerce.org/nexus/content/repositories/private-releases/</url>
         </repository>
     </repositories>
