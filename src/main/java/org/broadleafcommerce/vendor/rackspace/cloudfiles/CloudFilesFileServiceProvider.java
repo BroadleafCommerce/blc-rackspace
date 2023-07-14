@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Rackspace CloudFiles
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2023 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf End User License Agreement (EULA), Version 1.1
  * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt).
@@ -48,7 +48,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 /**
  * {@link FileServiceProvider} implementation that deals with Rackspace Cloud Files
