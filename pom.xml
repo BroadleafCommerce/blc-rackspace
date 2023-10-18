@@ -20,7 +20,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <blc.version>6.1.0-GA</blc.version>
         <jclouds.version>2.4.0</jclouds.version>
-        <guava.version>30.1.1-jre</guava.version> //See if this can be removed and use whats in the core
+        <guava.version>32.1.2-jre</guava.version>
+        //See if this can be removed and use whats in the core
     </properties>
 
     <scm>
@@ -93,7 +94,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>30.1.1-jre</version>
+            <version>32.1.2-jre</version>
         </dependency>
         <dependency>
             <groupId>org.broadleafcommerce</groupId>
