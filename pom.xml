@@ -19,7 +19,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <blc.version>5.1.5-GA</blc.version>
         <jclouds.version>2.0.1</jclouds.version>
-        <guava.version>16.0.1</guava.version>
+        <guava.version>32.1.3-jre</guava.version>
     </properties>
 
     <scm>
