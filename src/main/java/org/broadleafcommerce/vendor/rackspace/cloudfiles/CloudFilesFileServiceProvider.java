@@ -209,17 +209,15 @@ public class CloudFilesFileServiceProvider implements FileServiceProvider {
     }
 
     protected String getSiteDirectory(Site site) {
-        String siteDirectory = "site-" + site.getId();
-        return siteDirectory;
+        return "site-" + site.getId();
     }
 
     protected ObjectApi getCloudFilesObjectApi(CloudFilesConfiguration config) {
         CloudFilesApi cloudFilesApi = ContextBuilder.newBuilder(config.getProvider())
-                .credentials(config.getUsername(),config.getApiKey())
+                .credentials(config.getUsername(), config.getApiKey())
                 .buildApi(CloudFilesApi.class);
         return cloudFilesApi.getObjectApi(config.getRegion(), config.getContainer());
     }
-
 
     public void setCloudFilesConfigurationService(CloudFilesConfigurationService cloudFilesConfigurationService) {
         this.cloudFilesConfigurationService = cloudFilesConfigurationService;
