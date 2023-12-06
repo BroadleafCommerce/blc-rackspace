@@ -17,9 +17,8 @@
     <properties>
         <project.uri>${project.baseUri}</project.uri>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <blc.version>5.1.5-GA</blc.version>
-        <jclouds.version>2.0.1</jclouds.version>
-        <guava.version>16.0.1</guava.version>
+        <blc.version>5.1.25-GA</blc.version>
+        <jclouds.version>2.5.0</jclouds.version>
     </properties>
 
     <scm>
@@ -87,22 +86,35 @@
             <version>${jclouds.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.broadleafcommerce</groupId>
             <artifactId>broadleaf-common</artifactId>
             <version>${blc.version}</version>
             <scope>compile</scope>
             <type>jar</type>
             <optional>true</optional>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.owasp.antisamy</groupId>
+                    <artifactId>antisamy</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>dom4j</groupId>
+                    <artifactId>dom4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.code.findbugs</groupId>
+                    <artifactId>jsr305</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.broadleafcommerce</groupId>
             <artifactId>broadleaf-third-party-integration-config</artifactId>
-            <version>default</version>
+            <version>1.0.0-GA</version>
             <scope>test</scope>
             <type>jar</type>
             <optional>true</optional>

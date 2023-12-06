@@ -25,6 +25,7 @@ package org.broadleafcommerce.vendor.rackspace.cloudfiles;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -56,7 +57,7 @@ public class CloudFilesConfigurationServiceTest extends AbstractCloudFilesTest {
         } catch (IllegalArgumentException iae) {
             ok = false;
         }
-        assertTrue("Expected to get an exception.", !ok);
+        assertFalse("Expected to get an exception.", ok);
     }
 
     @Test
@@ -70,7 +71,7 @@ public class CloudFilesConfigurationServiceTest extends AbstractCloudFilesTest {
         } catch (IllegalArgumentException iae) {
             ok = false;
         }
-        assertTrue("Expected to get an exception.", !ok);
+        assertFalse("Expected to get an exception.", ok);
     }
 
     @Test
@@ -84,7 +85,7 @@ public class CloudFilesConfigurationServiceTest extends AbstractCloudFilesTest {
         } catch (IllegalArgumentException iae) {
             ok = false;
         }
-        assertTrue("Expected to get an exception.", !ok);
+        assertFalse("Expected to get an exception.", ok);
     }
 
     @Test
@@ -98,7 +99,7 @@ public class CloudFilesConfigurationServiceTest extends AbstractCloudFilesTest {
         } catch (IllegalArgumentException iae) {
             ok = false;
         }
-        assertTrue("Expected to get an exception.", !ok);
+        assertFalse("Expected to get an exception.", ok);
     }
 
     @Test
@@ -112,7 +113,7 @@ public class CloudFilesConfigurationServiceTest extends AbstractCloudFilesTest {
         } catch (IllegalArgumentException iae) {
             ok = false;
         }
-        assertTrue("Expected to get an exception.", !ok);
+        assertFalse("Expected to get an exception.", ok);
     }
 
 

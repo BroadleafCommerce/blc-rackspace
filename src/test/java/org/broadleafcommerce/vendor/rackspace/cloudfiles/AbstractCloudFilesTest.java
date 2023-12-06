@@ -26,9 +26,11 @@ package org.broadleafcommerce.vendor.rackspace.cloudfiles;
 import org.apache.commons.lang3.StringUtils;
 import org.broadleafcommerce.common.config.service.SystemPropertiesServiceImpl;
 import org.junit.BeforeClass;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+
 import net.sf.ehcache.CacheManager;
 
 /**
