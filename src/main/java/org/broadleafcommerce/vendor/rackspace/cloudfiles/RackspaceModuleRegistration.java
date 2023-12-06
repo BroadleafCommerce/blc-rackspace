@@ -21,13 +21,9 @@
  * from Broadleaf Commerce, LLC.
  * #L%
  */
-/**
- * 
- */
 package org.broadleafcommerce.vendor.rackspace.cloudfiles;
 
 import org.broadleafcommerce.common.module.BroadleafModuleRegistration;
-
 
 /**
  * 

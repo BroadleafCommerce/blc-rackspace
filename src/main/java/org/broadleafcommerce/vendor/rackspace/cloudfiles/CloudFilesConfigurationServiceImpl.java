@@ -26,6 +26,7 @@ package org.broadleafcommerce.vendor.rackspace.cloudfiles;
 import org.broadleafcommerce.common.config.service.SystemPropertiesService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+
 import javax.annotation.Resource;
 
 /**
