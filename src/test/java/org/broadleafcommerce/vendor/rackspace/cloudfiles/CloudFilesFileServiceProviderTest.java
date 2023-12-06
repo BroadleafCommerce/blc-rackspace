@@ -1,8 +1,8 @@
-/*
+/*-
  * #%L
  * BroadleafCommerce Rackspace CloudFiles
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2022 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf End User License Agreement (EULA), Version 1.1
  * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt).
@@ -36,18 +36,20 @@ import org.jclouds.openstack.swift.v1.domain.SwiftObject;
 import org.jclouds.openstack.swift.v1.features.ObjectApi;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -56,7 +58,7 @@ import static org.junit.Assert.assertTrue;
 public class CloudFilesFileServiceProviderTest extends AbstractCloudFilesTest {
 
     public static final String CLOUDFILES_CONTAINER_SUBDIR_PROP = "broadleaf.rackspace.cloudfiles.container.subdirectory";
-    private static CloudFilesFileServiceProvider cloudFilesProvider = new CloudFilesFileServiceProvider();
+    private static final CloudFilesFileServiceProvider cloudFilesProvider = new CloudFilesFileServiceProvider();
 
     private static final String TEST_FILE_CONTENTS = "abcdefghijklmnopqrstuvwxyz\n"
             + "01234567890112345678901234\n"
@@ -114,7 +116,7 @@ public class CloudFilesFileServiceProviderTest extends AbstractCloudFilesTest {
         // initialize the site before resetting properties to get the properties cache right
         BroadleafRequestContext context = new BroadleafRequestContext();
         SiteImpl site = new SiteImpl();
-        site.setId(10l);
+        site.setId(10L);
         site.setName("Test Site");
         context.setNonPersistentSite(site);
         BroadleafRequestContext.setBroadleafRequestContext(context);
@@ -135,7 +137,7 @@ public class CloudFilesFileServiceProviderTest extends AbstractCloudFilesTest {
         propService.setProperty(CLOUDFILES_CONTAINER_SUBDIR_PROP, "/img/");
         List<String> resourceNames = uploadTestFileWithResult(fileName);
         assertTrue("No resource names return", CollectionUtils.isNotEmpty(resourceNames));
-        assertTrue("More than 1 resource returned when only uploading a single resource", resourceNames.size() == 1);
+        assertEquals("More than 1 resource returned when only uploading a single resource", 1, resourceNames.size());
 
         assertTrue(cloudFilesProvider.removeResource(resourceNames.get(0)));
     }
@@ -144,7 +146,7 @@ public class CloudFilesFileServiceProviderTest extends AbstractCloudFilesTest {
     public void testNotFoundReturnsNonExistentFile() {
         resetAllProperties();
         File file = cloudFilesProvider.getResource("blahblahgarbledygoopcannotfind.ext");
-        assertTrue("The returned file should not exist", !file.exists());
+        assertFalse("The returned file should not exist", file.exists());
     }
 
     @Test
@@ -261,7 +263,7 @@ public class CloudFilesFileServiceProviderTest extends AbstractCloudFilesTest {
         File file = new File(fileName.startsWith("/") ? fileName.substring(1) : fileName);
         file.deleteOnExit();
         file.deleteOnExit();
-        Writer writer = new OutputStreamWriter(new FileOutputStream(file));
+        Writer writer = new OutputStreamWriter(Files.newOutputStream(file.toPath()));
         writer.write(TEST_FILE_CONTENTS);
         writer.close();
         return file;

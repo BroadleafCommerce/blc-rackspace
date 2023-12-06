@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!--
   #%L
-  BroadleafCommerce Rackspace CloudFiles
+  BroadleafCommerce Common Libraries
   %%
   Copyright (C) 2009 - 2022 Broadleaf Commerce
   %%
@@ -23,21 +23,32 @@
   #L%
   -->
 
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans.xsd
-           http://www.springframework.org/schema/context
-           http://www.springframework.org/schema/context/spring-context.xsd">
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
 
-    <context:component-scan base-package="org.broadleafcommerce.vendor.rackspace"/>
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                value="[%5p] %d{HH:mm:ss} %c{1} - %m%n" />
+        </layout>
+    </appender>
+    
+    <logger name="org.broadleafcommerce">
+        <level value="INFO"/>
+    </logger>
+    
+    <logger name="org.springframework">
+        <level value="WARN"/>
+    </logger>
+    
+    <logger name="org.hibernate">
+        <level value="WARN"/>
+    </logger>
+    
+    <root>
+        <level value="WARN" />
+        <appender-ref ref="console" />
+    </root>
 
-    <bean id="blDefaultFileServiceProvider" class="org.broadleafcommerce.vendor.rackspace.cloudfiles.CloudFilesFileServiceProvider" />
-
-    <bean class="org.broadleafcommerce.common.logging.ModuleLifecycleLoggingBean">
-        <property name="moduleName" value="Rackspace" />
-        <property name="lifeCycleEvent" value="LOADING" />
-    </bean>
-
-</beans>
+</log4j:configuration>

@@ -19,8 +19,7 @@
         <project.uri>${project.baseUri}</project.uri>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <blc.version>6.1.0-GA</blc.version>
-        <jclouds.version>2.4.0</jclouds.version>
-        <guava.version>30.1.1-jre</guava.version>
+        <jclouds.version>2.5.0</jclouds.version>
     </properties>
 
     <scm>
@@ -91,17 +90,30 @@
             <version>${jclouds.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>30.1.1-jre</version>
-        </dependency>
-        <dependency>
             <groupId>org.broadleafcommerce</groupId>
             <artifactId>broadleaf-common</artifactId>
             <version>${blc.version}</version>
             <scope>compile</scope>
             <type>jar</type>
             <optional>true</optional>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.owasp.antisamy</groupId>
+                    <artifactId>antisamy</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>dom4j</groupId>
+                    <artifactId>dom4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.code.findbugs</groupId>
+                    <artifactId>jsr305</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.broadleafcommerce</groupId>

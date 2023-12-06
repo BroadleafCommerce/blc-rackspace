@@ -1,8 +1,8 @@
-/*
+/*-
  * #%L
  * BroadleafCommerce Rackspace CloudFiles
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2022 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf End User License Agreement (EULA), Version 1.1
  * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt).
@@ -39,8 +39,10 @@ import org.jclouds.openstack.swift.v1.domain.SwiftObject;
 import org.jclouds.openstack.swift.v1.features.ObjectApi;
 import org.jclouds.rackspace.cloudfiles.v1.CloudFilesApi;
 import org.springframework.stereotype.Service;
+
 import com.google.common.io.ByteSource;
 import com.google.common.io.Files;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -48,11 +50,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.Resource;
 
 /**
  * {@link FileServiceProvider} implementation that deals with Rackspace Cloud Files
- *
  */
 @Service("blCloudFilesFileServiceProvider")
 public class CloudFilesFileServiceProvider implements FileServiceProvider {
@@ -62,18 +64,18 @@ public class CloudFilesFileServiceProvider implements FileServiceProvider {
 
     @Resource(name = "blFileService")
     protected BroadleafFileService fileService;
-    
+
     @Override
     public File getResource(String name) {
         return getResource(name, FileApplicationType.ALL);
     }
-    
+
     @Override
     public File getResource(String name, FileApplicationType fileApplicationType) {
         File returnFile = fileService.getLocalResource(buildResourceName(name));
         OutputStream outputStream = null;
         InputStream inputStream = null;
-        
+
         try {
             CloudFilesConfiguration cloudConfig = cloudFilesConfigurationService.lookupCloudFilesConfiguration();
             ObjectApi objectApi = getCloudFilesObjectApi(cloudConfig);
@@ -119,7 +121,7 @@ public class CloudFilesFileServiceProvider implements FileServiceProvider {
             }
         }
         return returnFile;
-	}
+    }
 
     @Override
     public void addOrUpdateResources(FileWorkArea workArea, List<File> files, boolean removeFilesFromWorkArea) {
@@ -169,6 +171,7 @@ public class CloudFilesFileServiceProvider implements FileServiceProvider {
 
     /**
      * hook for overriding name used for resource in Cloud Files
+     *
      * @param name
      * @return
      */
@@ -209,17 +212,15 @@ public class CloudFilesFileServiceProvider implements FileServiceProvider {
     }
 
     protected String getSiteDirectory(Site site) {
-        String siteDirectory = "site-" + site.getId();
-        return siteDirectory;
+        return "site-" + site.getId();
     }
 
     protected ObjectApi getCloudFilesObjectApi(CloudFilesConfiguration config) {
         CloudFilesApi cloudFilesApi = ContextBuilder.newBuilder(config.getProvider())
-                .credentials(config.getUsername(),config.getApiKey())
+                .credentials(config.getUsername(), config.getApiKey())
                 .buildApi(CloudFilesApi.class);
         return cloudFilesApi.getObjectApi(config.getRegion(), config.getContainer());
     }
-
 
     public void setCloudFilesConfigurationService(CloudFilesConfigurationService cloudFilesConfigurationService) {
         this.cloudFilesConfigurationService = cloudFilesConfigurationService;

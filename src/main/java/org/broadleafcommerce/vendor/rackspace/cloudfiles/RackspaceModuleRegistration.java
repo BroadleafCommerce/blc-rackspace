@@ -1,8 +1,8 @@
-/*
+/*-
  * #%L
  * BroadleafCommerce Rackspace CloudFiles
  * %%
- * Copyright (C) 2009 - 2017 Broadleaf Commerce
+ * Copyright (C) 2009 - 2022 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf End User License Agreement (EULA), Version 1.1
  * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt).
@@ -21,13 +21,9 @@
  * from Broadleaf Commerce, LLC.
  * #L%
  */
-/**
- * 
- */
 package org.broadleafcommerce.vendor.rackspace.cloudfiles;
 
 import org.broadleafcommerce.common.module.BroadleafModuleRegistration;
-
 
 /**
  * 
